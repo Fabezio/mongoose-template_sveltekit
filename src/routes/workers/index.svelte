@@ -1,23 +1,36 @@
 <script>
     import { onMount } from "svelte";
     import axios from "axios";
+    const title = "Liste des employés";
 
     const url = "http://localhost:3000/api/workers";
-    let items = [];
+    let workers = [];
+    onMount(() => fetchData());
     async function fetchData() {
         const { data } = await axios.get(url);
-        items = data;
+        workers = data;
     }
-    onMount(() => fetchData());
+    async function removeWorker(id) {
+        const response = await axios.delete(`${url}/${id}`);
+        if (response.data.id === id) {
+            workers = workers.filter((w) => w.id !== id);
+        }
+    }
 </script>
 
-<h1>Liste des employés</h1>
-{#each items as { nom, prenom, phone, email }, idx}
-    <div class="notification is-{idx % 2 === 0 ? 'primary' : 'info'}">
+<svelte:head>
+    <title>Planning | {title}</title>
+</svelte:head>
+
+<h1>{title}</h1>
+
+{#each workers as { nom, prenom, phone, email, _id }, idx}
+    <div class="notification  is-{idx % 2 === 0 ? 'primary' : 'info'}">
         {nom}
         {prenom}
         {phone}
         {email}
-        <button class="delete" />
+        <button on:click={removeWorker(_id)} class="delete" />
     </div>
 {/each}
+<a class="button" href="workers/add">Ajouter employé</a>

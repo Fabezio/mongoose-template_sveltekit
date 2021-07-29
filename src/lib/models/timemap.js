@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
 const { model, Schema } = mongoose
 
+
+
 const workerSch = new Schema({
   nom: String,
   prenom: String,
@@ -12,6 +14,18 @@ const workerSch = new Schema({
 const villeSch = new Schema({
   nom: String,
   codePostal: String
+})
+const jobsSch = new Schema({
+  date: String,
+  jour: {
+    chef: workerSch,
+    agent: workerSch
+  },
+  nuit: {
+    chef: workerSch,
+    agent: workerSch
+
+  }
 })
 
 const siteSchema = new Schema({
@@ -26,3 +40,4 @@ const siteSchema = new Schema({
 export const Worker = model('Worker', workerSch)
 export const Ville = model('Ville', villeSch)
 export const Site = model('Site', siteSchema)
+export const Job = model("Job", jobsSch)

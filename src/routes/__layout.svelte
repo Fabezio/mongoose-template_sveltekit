@@ -1,6 +1,13 @@
 <script>
-	import Header from '$lib/Header/index.svelte';
-	import '../app.css';
+	import Header from "$lib/Header/index.svelte";
+	import "../app.css";
+	const date = new Date();
+	const formatter = Intl.DateTimeFormat("fr", {
+		// weekday: "long",
+		// day: "numeric",
+		// month: "long",
+		year: "numeric",
+	});
 </script>
 
 <Header />
@@ -9,8 +16,28 @@
 	<slot />
 </main>
 
-<footer>
-	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+<footer class="footer">
+	<div>
+		<span>
+			creator: fabezio (visit <a href="https://fabric-io.netlify.app"
+				>this site</a
+			>
+			for more detail.)
+		</span>
+		<span class="ml-3">
+			mongoose-template_sveltekit &copy; {formatter.format(date)}
+		</span>
+		<span class="ml-3">
+			<i class="fab fa-github" />
+			<a href="https://github.com/Fabezio/mongoose-template_sveltekit"
+				>source code</a
+			>
+		</span>
+		<!-- </div> -->
+		<!-- <div> -->
+		<!-- </div> -->
+		<!-- <div> -->
+	</div>
 </footer>
 
 <style>
