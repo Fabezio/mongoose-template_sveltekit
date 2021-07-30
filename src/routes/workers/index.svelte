@@ -1,7 +1,8 @@
 <script>
     import { onMount } from "svelte";
+    import Title from '$lib/Header/Title.svelte'
     import axios from "axios";
-    const title = "Liste des employés";
+    const pageTitle = "Liste des employés";
 
     const url = "http://localhost:3000/api/workers";
     let workers = [];
@@ -18,11 +19,13 @@
     }
 </script>
 
+<Title {pageTitle} />
+<!-- 
 <svelte:head>
     <title>Planning | {title}</title>
 </svelte:head>
 
-<h1>{title}</h1>
+<h1>{title}</h1> -->
 
 {#each workers as { nom, prenom, phone, email, _id }, idx}
     <div class="notification  is-{idx % 2 === 0 ? 'primary' : 'info'}">

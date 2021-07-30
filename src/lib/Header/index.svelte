@@ -6,6 +6,7 @@
 		{ url: "/workers", label: "Employés", logo: "users" },
 		{ url: "/jobs", label: "Missions", logo: "list" },
 	];
+	const textWeight = "normal"
 </script>
 
 <nav class="navbar is-info" role="navigation" aria-label="main navigation">
@@ -43,7 +44,7 @@
 					<a
 						class="navbar-item {$page.path === url
 							? 'is-primary'
-							: 'is-info'} has-text-dark button is-rounded"
+							: 'is-info'} has-text-light has-text-weight-{textWeight} button is-rounded"
 						sveltekit:prefetch
 						href={url}
 					>

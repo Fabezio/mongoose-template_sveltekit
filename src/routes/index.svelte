@@ -4,24 +4,14 @@
 
 <script>
 	import Counter from "$lib/Counter/index.svelte";
+	import Title from '$lib/Header/Title.svelte'
 </script>
 
-<svelte:head>
-	<title>Accueil</title>
-</svelte:head>
+<Title pageTitle="Accueil" />
+
 
 <section>
-	<h1>
-		Accueil
-		<!-- <div class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
-		</div> -->
-
-		<!-- to your new<br />SvelteKit app -->
-	</h1>
+	
 	<article class="section">
 		Cette application est destinée à la gestion de plannings des effectifs
 		de sécurité
