@@ -1,48 +1,106 @@
 <script>
 	import { page } from "$app/stores";
 	import logo from "./svelte-logo.svg";
+	const links = [
+		{ url: "/", label: "Accueil", logo: "home" },
+		{ url: "/workers", label: "Employés", logo: "users" },
+		{ url: "/jobs", label: "Missions", logo: "list" },
+	];
 </script>
 
-<header>
-	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a>
+<nav class="navbar is-info" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand ">
+		<div class="navbar-item">
+			<figure class="image  is-32x32">
+				<img src="favicon.png" alt="logo" />
+			</figure>
+		</div>
+		<!-- <a class="navbar-item" href="https://bulma.io">
+			<img
+				src="https://bulma.io/images/bulma-logo.png"
+				width="112"
+				height="28"
+			/>
+		</a> -->
+
+		<!-- <a
+			role="button"
+			class="navbar-burger"
+			aria-label="menu"
+			aria-expanded="false"
+			data-target="navbarBasicExample"
+		>
+			<span aria-hidden="true" />
+			<span aria-hidden="true" />
+			<span aria-hidden="true" />
+		</a> -->
 	</div>
 
-	<nav>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
-		<ul>
-			<li class:active={$page.path === "/"}>
-				<a sveltekit:prefetch href="/">Accueil</a>
-			</li>
-			<li class:active={$page.path === "/workers"}>
+	<div id="navbarBasicExample" class="navbar-menu">
+		<div class="navbar-start">
+			{#each links as { url, label, logo }}
+				<div class="py-2 mx-1" class:active={$page.path === url}>
+					<a
+						class="navbar-item {$page.path === url
+							? 'is-primary'
+							: 'is-info'} has-text-dark button is-rounded"
+						sveltekit:prefetch
+						href={url}
+					>
+						<!-- <i
+							class="is-centered button is-rounded is-warning fas fa-{logo} fa-fw fa-2x "
+						/> -->
+
+						{label}</a
+					>
+				</div>
+			{/each}
+			<!-- <div class="py-2" class:active={$page.path === "/"}>
+				<a
+					class="navbar-item button is-rounded"
+					sveltekit:prefetch
+					href="/">Accueil</a
+				>
+			</div>
+
+			<div class="navbar-item" class:active={$page.path === "/workers"}>
 				<a sveltekit:prefetch href="/workers">Employés</a>
-			</li>
-			<li class:active={$page.path === "/jobs"}>
+			</div>
+			<div class="navbar-item" class:active={$page.path === "/jobs"}>
 				<a sveltekit:prefetch href="/jobs">Missions</a>
-			</li>
-			<!-- <li class:active={$page.path === "/about"}>
-				<a sveltekit:prefetch href="/about">About</a>
-			</li>
-			<li class:active={$page.path === "/todos"}>
-				<a sveltekit:prefetch href="/todos">Todos</a>
-			</li> -->
-		</ul>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
-	</nav>
+			</div> -->
+			<!-- <a class="navbar-item"> Home </a>
 
-	<div class="corner">
-		<!-- TODO put something else here? github link? -->
+			<a class="navbar-item"> Documentation </a> -->
+
+			<!-- <div class="navbar-item has-dropdown is-hoverable">
+				<a class="navbar-link"> More </a>
+
+				<div class="navbar-dropdown">
+					<a class="navbar-item"> About </a>
+					<a class="navbar-item"> Jobs </a>
+					<a class="navbar-item"> Contact </a>
+					<hr class="navbar-divider" />
+					<a class="navbar-item"> Report an issue </a>
+				</div>
+			</div> -->
+		</div>
+
+		<!-- <div class="navbar-end">
+			<div class="navbar-item">
+				<div class="buttons">
+					<a class="button is-primary">
+						<strong>Sign up</strong>
+					</a>
+					<a class="button is-light"> Log in </a>
+				</div>
+			</div>
+		</div> -->
 	</div>
-</header>
+</nav>
 
 <style>
-	header {
+	/* header {
 		display: flex;
 		justify-content: space-between;
 	}
@@ -64,7 +122,7 @@
 		width: 2em;
 		height: 2em;
 		object-fit: contain;
-	}
+	} */
 
 	nav {
 		display: flex;
@@ -72,7 +130,7 @@
 		--background: rgba(255, 255, 255, 0.7);
 	}
 
-	svg {
+	/* svg {
 		width: 2em;
 		height: 3em;
 		display: block;
@@ -110,7 +168,7 @@
 		left: calc(50% - var(--size));
 		border: var(--size) solid transparent;
 		border-top: var(--size) solid var(--accent-color);
-	}
+	} */
 
 	nav a {
 		display: flex;

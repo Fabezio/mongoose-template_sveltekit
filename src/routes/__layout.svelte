@@ -1,6 +1,6 @@
 <script>
 	import Header from "$lib/Header/index.svelte";
-	import "../app.css";
+	// import "../app.css";
 	const date = new Date();
 	const formatter = Intl.DateTimeFormat("fr", {
 		// weekday: "long",
