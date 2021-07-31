@@ -8,7 +8,7 @@ const workerSch = new Schema({
   prenom: String,
   phone: String,
   email: String
-
+  
 })
 
 const villeSch = new Schema({
@@ -18,12 +18,12 @@ const villeSch = new Schema({
 const jobsSch = new Schema({
   date: String,
   jour: {
-    chef: workerSch,
-    agent: workerSch
+    chef: Object,
+    agent: Object
   },
   nuit: {
-    chef: workerSch,
-    agent: workerSch
+    chef: Object,
+    agent: Object
 
   }
 })
@@ -33,8 +33,8 @@ const siteSchema = new Schema({
   adresse: String,
   telephone: String,
   email: String,
-  ville: villeSch,
-  effectif: [workerSch]
+  ville: Object,
+  effectif: Object
 })
 
 export const Worker = model('Worker', workerSch)

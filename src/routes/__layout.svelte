@@ -1,5 +1,6 @@
 <script>
 	import Header from "$lib/Header/index.svelte";
+	import Weather from "$lib/Weather.svelte"
 	// import "../app.css";
 	const date = new Date();
 	const formatter = Intl.DateTimeFormat("fr", {
@@ -12,6 +13,7 @@
 
 <Header />
 
+emplacement météo: <Weather />
 <main class="container">
 	<slot />
 </main>
