@@ -96,7 +96,7 @@
             <button on:click={removeWorker(_id)} class="delete" />
         </div>
     {/each}
+    <button class="button" on:click={() => (addWorker = !addWorker)}
+        >Ajouter employé</button
+    >
 {/if}
-<button class="button" on:click={() => (addWorker = !addWorker)}
-    >Ajouter employé</button
->

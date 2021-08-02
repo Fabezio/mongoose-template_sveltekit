@@ -1,12 +1,13 @@
 <script>
 	import { page } from "$app/stores";
-	import logo from "./svelte-logo.svg";
+	import Clock from "./Clock.svelte";
+
 	const links = [
 		{ url: "/", label: "Accueil", logo: "home" },
 		{ url: "/workers", label: "Employés", logo: "users" },
 		{ url: "/jobs", label: "Missions", logo: "list" },
 	];
-	const textWeight = "normal"
+	const textWeight = "normal";
 </script>
 
 <nav class="navbar is-info" role="navigation" aria-label="main navigation">
@@ -86,6 +87,7 @@
 				</div>
 			</div> -->
 		</div>
+		<Clock />
 
 		<!-- <div class="navbar-end">
 			<div class="navbar-item">
