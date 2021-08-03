@@ -4,6 +4,8 @@
     import axios from "axios";
     // import { page } from "$app/stores";
     import Input from "$lib/Forms/Input.svelte";
+    import Button from "$lib/Button.svelte";
+
 
     let addJob = false;
 
@@ -84,8 +86,11 @@
         bind:value={email}
         placeholder="email"
     /><br /> -->
+            <Button size="medium" Type="submit" variant="warning" >Enregistrer</Button>
+            <!--
+            <button class="button-medium" type="submit">Enregistrer</button> <br />
 
-        <button class="button-medium" type="submit">Enregistrer</button> <br />
+        -->
     </form>
 {:else}
     {#each jobs as { date, jour, nuit, _id }, idx}

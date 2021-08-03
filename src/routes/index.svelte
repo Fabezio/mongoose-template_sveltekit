@@ -32,6 +32,7 @@
 		align-items: center;
 		flex: 1;
 	}
+	/*
 
 	h1 {
 		width: 100%;
@@ -51,4 +52,5 @@
 		top: 0;
 		display: block;
 	}
+	*/
 </style>

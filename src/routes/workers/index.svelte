@@ -6,6 +6,7 @@
     let addWorker = false;
 
     import Input from "$lib/Forms/Input.svelte";
+    import Button from "$lib/Button.svelte";
     // import {
     //     nom,
     //     prenom,
@@ -83,8 +84,11 @@
             bind:value={email}
             placeholder="email"
         /><br />
+        <Button size="medium" Type="submit" variant="warning" >Enregistrer</Button>
+        <!--
 
-        <button class="button-medium" type="submit">Enregistrer</button> <br />
+            <button class="button-medium" type="submit">Enregistrer</button> <br />
+        -->
     </form>
 {:else}
     {#each workers as { nom, prenom, phone, email, _id }, idx}
@@ -96,6 +100,7 @@
             <button on:click={removeWorker(_id)} class="delete" />
         </div>
     {/each}
+    
     <button class="button" on:click={() => (addWorker = !addWorker)}
         >Ajouter employé</button
     >
