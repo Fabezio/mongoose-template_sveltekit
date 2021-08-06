@@ -1,10 +1,9 @@
 import connectDB from '$lib/db'
-import { Job } from '$lib/models/timemap'
+import { Job } from '$lib/models/jobs'
 // import {Worker} from '$lib/models/'
 connectDB()
 
-export async function get(req) {
-
+export async function get () {
   try {
     const jobs = await Job.find()
     // if (!jobs) { throw new Error('No job found') }
@@ -12,14 +11,12 @@ export async function get(req) {
       status: 200,
       body: jobs
     }
-    
   } catch (error) {
     return {
       status: 400,
       body: []
-  
-    }
 
+    }
   }
 }
 

@@ -7,7 +7,7 @@
     import Button from "$lib/Compos/Button.svelte";
     import { joursFeriés } from "$lib/joursferiés";
 
-    console.log(typeof joursFeriés);
+    // console.log(typeof joursFeriés);
 
     let addJob = false;
 
@@ -128,11 +128,7 @@
     </form>
 {:else}
     {#each jobs as { date, isFerie, chefJour, chefNuit, agentJour, agentNuit, _id }, idx}
-        <div
-            class="notification {isFerie && 'is-success'}  is-{idx % 2 === 0
-                ? 'primary'
-                : 'info'}"
-        >
+        <div class="notification {isFerie ? 'is-success' : 'is-light'}  ">
             <!-- {_id} -->
             {date}
             <!-- <span class= -->
@@ -158,8 +154,8 @@
 
 <!-- <a class="button" href="jobs/add">Ajouter employé</a> -->
 <style>
-    i {
+    /* i {
         font-size: 1.5rem;
         font-style: normal;
-    }
+    } */
 </style>

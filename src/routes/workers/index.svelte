@@ -52,6 +52,9 @@
             workers = workers.filter((w) => w.id !== id);
         }
     }
+    async function updateWorker() {
+        alert("update me!");
+    }
     console.log(addWorker);
 </script>
 

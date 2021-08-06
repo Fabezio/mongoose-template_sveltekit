@@ -1,25 +1,23 @@
 import connectDB from '$lib/db'
-import { Worker } from '$lib/models/timemap'
+import { Worker } from '$lib/models/workers'
 connectDB()
-export async function post(request, response) {
-const newObj = new Worker(request.body)
+export async function post (request) {
+  const newObj = new Worker(request.body)
   try {
-      const obj = await newObj.save()
-      if (!obj) { throw new Error("error adding worker") }
+    const obj = await newObj.save()
+    if (!obj) { throw new Error('error adding worker') }
     //   return {
     //       status: 200,
     //       headers: {Location: '/workers'}
     //   }
-      return {
-          status: 200,
-          body: obj
-      }
-    
-      
+    return {
+      status: 200,
+      body: obj
+    }
   } catch (error) {
-      return {
+    return {
       status: 500,
-      body: "error adding worker"
+      body: 'error adding worker'
+    }
   }
-}
 }
