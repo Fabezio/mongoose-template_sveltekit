@@ -6,7 +6,7 @@
     let addWorker = false;
 
     import Input from "$lib/Forms/Input.svelte";
-    import Button from "$lib/Button.svelte";
+    import Button from "$lib/Compos/Button.svelte";
     // import {
     //     nom,
     //     prenom,
@@ -84,7 +84,12 @@
             bind:value={email}
             placeholder="email"
         /><br />
-        <Button size="medium" Type="submit" variant="warning" >Enregistrer</Button>
+        <Button
+            size="medium"
+            Type="submit"
+            width="is-fullwidth"
+            variant="warning">Enregistrer</Button
+        >
         <!--
 
             <button class="button-medium" type="submit">Enregistrer</button> <br />
@@ -100,8 +105,13 @@
             <button on:click={removeWorker(_id)} class="delete" />
         </div>
     {/each}
-    
-    <button class="button" on:click={() => (addWorker = !addWorker)}
-        >Ajouter employé</button
+    <Button
+        variant="success"
+        size="large"
+        width="is-fullwidth"
+        on:click={() => (addWorker = !addWorker)}>Ajouter employé</Button
     >
+    <!-- <button class="button" on:click={() => (addWorker = !addWorker)}
+        >Ajouter employé</button
+    > -->
 {/if}

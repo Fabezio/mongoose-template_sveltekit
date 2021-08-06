@@ -11,6 +11,7 @@
     $: if (!value.length && change) err = true;
     // $: type
     // export let form
+    $: console.log(value);
 </script>
 
 {#if type === "text"}
@@ -41,7 +42,7 @@
     <input
         class="input is-{!err ? 'primary' : 'danger'}"
         type="date"
-        bind:this={value}
+        bind:value
         {placeholder}
         {name}
     />

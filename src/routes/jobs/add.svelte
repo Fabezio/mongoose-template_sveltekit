@@ -53,6 +53,7 @@
 
 <form on:submit={submit}>
     <Input type="date" name="nom" bind:value={date} placeholder="nom" /><br />
+    {date}
     <!-- <Input
         type="text"
         name="prenom"

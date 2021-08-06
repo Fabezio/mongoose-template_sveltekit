@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
+
 const { model, Schema } = mongoose
-
-
 
 const workerSch = new Schema({
   nom: String,
@@ -17,15 +16,13 @@ const villeSch = new Schema({
 })
 const jobsSch = new Schema({
   date: String,
-  jour: {
-    chef: Object,
-    agent: Object
-  },
-  nuit: {
-    chef: Object,
-    agent: Object
+  isFerie: {type: Boolean, default: false},
+  chefJour: String,
+    agentJour: String,
+  chefNuit: String,
+    agentNuit: String
 
-  }
+  
 })
 
 const siteSchema = new Schema({
