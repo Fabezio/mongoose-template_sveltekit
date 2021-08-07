@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import Title from "$lib/Header/Title.svelte";
+    import { workers } from "$lib/_store/$workers";
     import axios from "axios";
 
     let addWorker = false;
@@ -13,17 +14,17 @@
     //     email,
     //     phone,
     //     worker,
-    //     workers,
+    //     $workers,
     // } from "../store/worker";
     let nom = "";
     let prenom = "";
     let phone = "";
     let email = "";
     let worker = {};
-    let workers = [];
+    // let $workers = [];
     // import { url } from "../store/db";
-    // const url = "http://localhost:3000/api/workers/add";
-    const url = "http://localhost:3000/api/workers";
+    // const url = "http://localhost:3000/api/$workers/add";
+    const url = "http://localhost:3000/api/$workers";
     let full = false;
     function submit(e) {
         full = true;
@@ -35,21 +36,21 @@
             email: email.value,
         };
         const response = axios.post(url + "/add", worker);
-        workers = [...workers, response.data];
+        $workers = [...$workers, response.data];
         addWorker = false;
     }
     const pageTitle = "Liste des employés";
 
-    // let workers = [];
+    // let $workers = [];
     onMount(() => fetchData());
     async function fetchData() {
         const { data } = await axios.get(url);
-        workers = data;
+        $workers = data;
     }
     async function removeWorker(id) {
         const response = await axios.delete(`${url}/${id}`);
         if (response.data.id === id) {
-            workers = workers.filter((w) => w.id !== id);
+            $workers = $workers.filter((w) => w.id !== id);
         }
     }
     async function updateWorker() {
@@ -99,7 +100,7 @@
         -->
     </form>
 {:else}
-    {#each workers as { nom, prenom, phone, email, _id }, idx}
+    {#each $workers as { nom, prenom, phone, email, _id }, idx}
         <div class="notification  is-{idx % 2 === 0 ? 'primary' : 'info'}">
             {nom}
             {prenom}

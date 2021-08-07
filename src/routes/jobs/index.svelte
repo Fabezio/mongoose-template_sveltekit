@@ -1,15 +1,19 @@
 <script>
     import { onMount } from "svelte";
+    // import { workers } from "$lib/_store/workers";
+    // import { jobs } from "$lib/_store/jobs";
     import Title from "$lib/Header/Title.svelte";
     import axios from "axios";
     // import { page } from "$app/stores";
     import Input from "$lib/Forms/Input.svelte";
+    import Select from "$lib/Forms/Select.svelte";
     import Button from "$lib/Compos/Button.svelte";
     import { joursFeriés } from "$lib/joursferiés";
 
     // console.log(typeof joursFeriés);
 
     let addJob = false;
+    let selected = ""; //temporaire
 
     // import {
     //     nom,
@@ -33,6 +37,17 @@
     const url = "http://localhost:3000/api/jobs";
     const workersUrl = "http://localhost:3000/api/workers";
     let workers = [];
+    const list = ["moi", 
+    "toi",
+    "le facteur",
+    "le chat",
+    "ta mère",
+    "ta chatte",
+]
+async function fetchWorkers() {
+    const { data } = await axios.get(workersUrl);
+    workers = data;
+}
 
     let full = false;
     function submit(e) {
@@ -57,7 +72,10 @@
     const pageTitle = "Missions de jour";
 
     // let jobs = [];
-    onMount(() => fetchData());
+    onMount(() => {
+        fetchWorkers()
+        fetchData()
+    });
     async function fetchData() {
         const { data } = await axios.get(url);
         jobs = data;
@@ -75,7 +93,13 @@
 {#if addJob}
     <form on:submit={submit}>
         <Input type="date" name="nom" bind:value={date} placeholder="nom" />
+        <Select fieldZero="Chef de jour" list={workers} bind:value={chefJour} />
+        <Select fieldZero="Agent de jour" list={workers} bind:value={agentJour} />
+        <Select fieldZero="Chef de nuit" list={workers} bind:value={chefNuit} />
+        <Select fieldZero="Agent de Nuit" list={workers} bind:value={agentNuit} />
+       
 
+<!-- 
         <Input
             type="text"
             name="chefJour"
@@ -99,7 +123,7 @@
             name="agentNuit"
             bind:value={agentNuit}
             placeholder="agent de nuit: "
-        />
+        /> -->
 
         <!-- <Input
         type="text"
@@ -126,6 +150,11 @@
 
         -->
     </form>
+    {selected}
+    {chefJour}
+    {agentJour}
+    {chefNuit}
+    {agentNuit}
 {:else}
     {#each jobs as { date, isFerie, chefJour, chefNuit, agentJour, agentNuit, _id }, idx}
         <div class="notification {isFerie ? 'is-success' : 'is-light'}  ">
