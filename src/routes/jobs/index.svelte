@@ -8,6 +8,7 @@
     import Input from "$lib/Forms/Input.svelte";
     import Select from "$lib/Forms/Select.svelte";
     import Button from "$lib/Compos/Button.svelte";
+    import NotifBar from "$lib/Compos/NotifBar.svelte";
     import { joursFeriés } from "$lib/joursferiés";
 
     // console.log(typeof joursFeriés);
@@ -37,17 +38,18 @@
     const url = "http://localhost:3000/api/jobs";
     const workersUrl = "http://localhost:3000/api/workers";
     let workers = [];
-    const list = ["moi", 
-    "toi",
-    "le facteur",
-    "le chat",
-    "ta mère",
-    "ta chatte",
-]
-async function fetchWorkers() {
-    const { data } = await axios.get(workersUrl);
-    workers = data;
-}
+    // const list = [
+    //     "moi",
+    //     "toi",
+    //     "le facteur",
+    //     "le chat",
+    //     "ta mère",
+    //     "ta chatte",
+    // ];
+    async function fetchWorkers() {
+        const { data } = await axios.get(workersUrl);
+        workers = data;
+    }
 
     let full = false;
     function submit(e) {
@@ -73,8 +75,8 @@ async function fetchWorkers() {
 
     // let jobs = [];
     onMount(() => {
-        fetchWorkers()
-        fetchData()
+        fetchWorkers();
+        fetchData();
     });
     async function fetchData() {
         const { data } = await axios.get(url);
@@ -94,51 +96,17 @@ async function fetchWorkers() {
     <form on:submit={submit}>
         <Input type="date" name="nom" bind:value={date} placeholder="nom" />
         <Select fieldZero="Chef de jour" list={workers} bind:value={chefJour} />
-        <Select fieldZero="Agent de jour" list={workers} bind:value={agentJour} />
-        <Select fieldZero="Chef de nuit" list={workers} bind:value={chefNuit} />
-        <Select fieldZero="Agent de Nuit" list={workers} bind:value={agentNuit} />
-       
-
-<!-- 
-        <Input
-            type="text"
-            name="chefJour"
-            bind:value={chefJour}
-            placeholder="chef de jour: "
-        />
-        <Input
-            type="text"
-            name="agentJour"
+        <Select
+            fieldZero="Agent de jour"
+            list={workers}
             bind:value={agentJour}
-            placeholder="agent de jour: "
         />
-        <Input
-            type="text"
-            name="chefNuit"
-            bind:value={chefNuit}
-            placeholder="chef de nuit: "
-        />
-        <Input
-            type="text"
-            name="agentNuit"
+        <Select fieldZero="Chef de nuit" list={workers} bind:value={chefNuit} />
+        <Select
+            fieldZero="Agent de Nuit"
+            list={workers}
             bind:value={agentNuit}
-            placeholder="agent de nuit: "
-        /> -->
-
-        <!-- <Input
-        type="text"
-        name="prenom"
-        bind:value={prenom}
-        placeholder="prenom"
-    /><br />
-    <Input type="tel" name="phone" bind:value={phone} placeholder="phone" /><br
-    />
-    <Input
-        type="email"
-        name="email"
-        bind:value={email}
-        placeholder="email"
-    /><br /> -->
+        />
         <Button
             size="medium"
             Type="submit"
@@ -157,17 +125,28 @@ async function fetchWorkers() {
     {agentNuit}
 {:else}
     {#each jobs as { date, isFerie, chefJour, chefNuit, agentJour, agentNuit, _id }, idx}
-        <div class="notification {isFerie ? 'is-success' : 'is-light'}  ">
-            <!-- {_id} -->
+        <NotifBar
+            classes="is-{isFerie ? 'success' : 'light'}"
+            on:remove={removeJob(_id)}
+        >
             {date}
-            <!-- <span class= -->
-            {chefJour}
-            {agentJour}
-            {chefNuit}
-            {agentNuit}
+
+            {chefJour.toUpperCase()}
+            {agentJour.toUpperCase()}
+            {chefNuit.toUpperCase()}
+            {agentNuit.toUpperCase()}
+        </NotifBar>
+        <!-- <div class="notification {isFerie ? 'is-success' : 'is-light'}  ">
+
+            {date}
+
+            {chefJour.toUpperCase()}
+            {agentJour.toUpperCase()}
+            {chefNuit.toUpperCase()}
+            {agentNuit.toUpperCase()}
 
             <button on:click={removeJob(_id)} class="delete" />
-        </div>
+        </div> -->
     {/each}
     <Button
         variant="info"

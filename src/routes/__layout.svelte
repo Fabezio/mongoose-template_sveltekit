@@ -1,7 +1,7 @@
 <script>
 	import Header from "$lib/Header/index.svelte";
-	import Footer from "$lib/Footer.svelte";
-	import Weather from "$lib/Weather.svelte";
+	import Footer from "$lib/Container/Footer.svelte";
+	import Weather from "$lib/Header/Weather.svelte";
 	import "../app.css";
 </script>
 

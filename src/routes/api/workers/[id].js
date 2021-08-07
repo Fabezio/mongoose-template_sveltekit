@@ -7,7 +7,7 @@ export async function del (request) {
   try {
     const obj = Worker.findById(id)
     if (!obj) { throw new Error('not found') }
-    const removed = await obj.remove()
+    const removed = await obj.deleteOne()
     if (!removed) { throw new Error('deleting error') }
     return {
       status: 200,

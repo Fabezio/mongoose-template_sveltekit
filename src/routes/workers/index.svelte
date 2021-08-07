@@ -1,30 +1,30 @@
 <script>
     import { onMount } from "svelte";
     import Title from "$lib/Header/Title.svelte";
-    import { workers } from "$lib/_store/$workers";
+    // import { workers } from "$lib/_store/workers";
     import axios from "axios";
-
-    let addWorker = false;
 
     import Input from "$lib/Forms/Input.svelte";
     import Button from "$lib/Compos/Button.svelte";
+    import NotifBar from "$lib/Compos/NotifBar.svelte";
+    let addWorker = false;
     // import {
     //     nom,
     //     prenom,
     //     email,
     //     phone,
     //     worker,
-    //     $workers,
+    //     workers,
     // } from "../store/worker";
     let nom = "";
     let prenom = "";
     let phone = "";
     let email = "";
     let worker = {};
-    // let $workers = [];
+    let workers = [];
     // import { url } from "../store/db";
-    // const url = "http://localhost:3000/api/$workers/add";
-    const url = "http://localhost:3000/api/$workers";
+    // const url = "http://localhost:3000/api/workers/add";
+    const url = "http://localhost:3000/api/workers";
     let full = false;
     function submit(e) {
         full = true;
@@ -36,27 +36,28 @@
             email: email.value,
         };
         const response = axios.post(url + "/add", worker);
-        $workers = [...$workers, response.data];
+        workers = [...workers, response.data];
         addWorker = false;
+        return workers;
     }
     const pageTitle = "Liste des employés";
 
-    // let $workers = [];
+    // let workers = [];
     onMount(() => fetchData());
     async function fetchData() {
         const { data } = await axios.get(url);
-        $workers = data;
+        workers = data;
     }
     async function removeWorker(id) {
         const response = await axios.delete(`${url}/${id}`);
         if (response.data.id === id) {
-            $workers = $workers.filter((w) => w.id !== id);
+            workers = workers.filter((w) => w.id !== id);
         }
     }
     async function updateWorker() {
         alert("update me!");
     }
-    console.log(addWorker);
+    // console.log(addWorker);
 </script>
 
 <Title {pageTitle} />
@@ -75,19 +76,14 @@
             name="prenom"
             bind:value={prenom}
             placeholder="prenom"
-        /><br />
-        <Input
-            type="tel"
-            name="phone"
-            bind:value={phone}
-            placeholder="phone"
-        /><br />
+        />
+        <Input type="tel" name="phone" bind:value={phone} placeholder="phone" />
         <Input
             type="email"
             name="email"
             bind:value={email}
             placeholder="email"
-        /><br />
+        />
         <Button
             size="medium"
             Type="submit"
@@ -100,14 +96,19 @@
         -->
     </form>
 {:else}
-    {#each $workers as { nom, prenom, phone, email, _id }, idx}
-        <div class="notification  is-{idx % 2 === 0 ? 'primary' : 'info'}">
+    {#each workers as { nom, prenom, phone, email, _id }, idx}
+        <NotifBar
+            classes="is-{idx % 2 === 0 ? 'primary' : 'info'}"
+            on:remove={removeWorker(_id)}
+        >
+            <!-- <div class="notification  is-{idx % 2 === 0 ? 'primary' : 'info'}"> -->
             {nom}
             {prenom}
             {phone}
             {email}
-            <button on:click={removeWorker(_id)} class="delete" />
-        </div>
+            <!-- <button on:click={removeWorker(_id)} class="delete" />
+        </div> -->
+        </NotifBar>
     {/each}
     <Button
         variant="success"
