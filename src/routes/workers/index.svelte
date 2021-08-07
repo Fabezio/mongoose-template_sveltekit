@@ -69,8 +69,7 @@
 <h1>{title}</h1> -->
 {#if addWorker}
     <form on:submit={submit}>
-        <Input type="text" name="nom" bind:value={nom} placeholder="nom" /><br
-        />
+        <Input type="text" name="nom" bind:value={nom} placeholder="nom" />
         <Input
             type="text"
             name="prenom"
@@ -85,6 +84,7 @@
             placeholder="email"
         />
         <Button
+            on:click={() => console.log("enregistrement en cours...")}
             size="medium"
             Type="submit"
             width="is-fullwidth"
@@ -96,6 +96,13 @@
         -->
     </form>
 {:else}
+    <Button
+        variant="success"
+        size="large"
+        width="is-fullwidth"
+        on:click={() => (addWorker = !addWorker)}>Ajouter employé</Button
+    >
+    <br />
     {#each workers as { nom, prenom, phone, email, _id }, idx}
         <NotifBar
             classes="is-{idx % 2 === 0 ? 'primary' : 'info'}"
@@ -110,12 +117,7 @@
         </div> -->
         </NotifBar>
     {/each}
-    <Button
-        variant="success"
-        size="large"
-        width="is-fullwidth"
-        on:click={() => (addWorker = !addWorker)}>Ajouter employé</Button
-    >
+
     <!-- <button class="button" on:click={() => (addWorker = !addWorker)}
         >Ajouter employé</button
     > -->
