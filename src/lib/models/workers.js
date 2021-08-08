@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const { model, Schema } = mongoose
 
 export const workerSch = new Schema({
-  nom: String,
+  nom: {type: String, required: true},
   prenom: String,
   phone: String,
   email: String

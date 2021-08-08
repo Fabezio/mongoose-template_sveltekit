@@ -1,51 +1,27 @@
 <script>
     import { onMount } from "svelte";
-    // import { workers } from "$lib/_store/workers";
-    // import { jobs } from "$lib/_store/jobs";
-    import Title from "$lib/Header/Title.svelte";
     import axios from "axios";
-    // import { page } from "$app/stores";
+
+    import Title from "$lib/Header/Title.svelte";
     import Input from "$lib/Forms/Input.svelte";
     import Select from "$lib/Forms/Select.svelte";
     import Button from "$lib/Compos/Button.svelte";
     import NotifBar from "$lib/Compos/NotifBar.svelte";
     import { joursFeriés } from "$lib/joursferiés";
 
-    // console.log(typeof joursFeriés);
-
     let addJob = false;
     let selected = ""; //temporaire
-
-    // import {
-    //     nom,
-    //     prenom,
-    //     email,
-    //     phone,
-    //     worker,
-    //     workers,
-    // } from "../store/worker";
     let date = "";
     let chefJour = "";
     let chefNuit = "";
     let agentJour = "";
     let agentNuit = "";
-    // let jour = {};
-    // let nuit = {};
     let job = {};
     let jobs = [];
-    // import { url } from "../store/db";
-    // const url = "http://localhost:3000/api/jobs/add";
     const url = "http://localhost:3000/api/jobs";
     const workersUrl = "http://localhost:3000/api/workers";
     let workers = [];
-    // const list = [
-    //     "moi",
-    //     "toi",
-    //     "le facteur",
-    //     "le chat",
-    //     "ta mère",
-    //     "ta chatte",
-    // ];
+
     async function fetchWorkers() {
         const { data } = await axios.get(workersUrl);
         workers = data;
@@ -60,24 +36,34 @@
             if (date === k) isFerie = true;
             // console.log(k);
         }
+
         job = {
             date: date,
             isFerie: isFerie,
-            chefJour,
-            agentJour,
-            chefNuit,
-            agentNuit,
+            chefJour: pickWorker(chefJour),
+            agentJour: pickWorker(agentJour),
+            chefNuit: pickWorker(chefNuit),
+            agentNuit: pickWorker(agentNuit),
         };
         const response = axios.post(url + "/add", job);
         jobs = [...jobs, response.data];
     }
     const pageTitle = "Missions de jour";
 
-    // let jobs = [];
     onMount(() => {
         fetchWorkers();
         fetchData();
     });
+    function pickWorker(nom) {
+        // console.log("nom:", nom);
+        let found;
+        workers.map((w) => {
+            if (w.nom === nom) found = w;
+        });
+        console.log(found);
+        delete found._id;
+        return found;
+    }
     async function fetchData() {
         const { data } = await axios.get(url);
         jobs = data;
@@ -94,13 +80,16 @@
 
 {#if addJob}
     <form on:submit={submit}>
+        <div class="subtitle is-5 mb-1 mt-2">Date de la mission</div>
         <Input type="date" name="nom" bind:value={date} placeholder="nom" />
+        <div class="subtitle is-5 mb-1 mt-2">Effectif de jour</div>
         <Select fieldZero="Chef de jour" list={workers} bind:value={chefJour} />
         <Select
             fieldZero="Agent de jour"
             list={workers}
             bind:value={agentJour}
         />
+        <div class="subtitle is-5 mb-1 mt-2">Effectif de nuit</div>
         <Select fieldZero="Chef de nuit" list={workers} bind:value={chefNuit} />
         <Select
             fieldZero="Agent de Nuit"
@@ -110,13 +99,9 @@
         <Button
             size="medium"
             Type="submit"
-            variant="warning"
+            variant="info mt-4 is-outlined "
             width="is-fullwidth">Enregistrer</Button
         >
-        <!--
-            <button class="button-medium" type="submit">Enregistrer</button> <br />
-
-        -->
     </form>
     {selected}
     {chefJour}
@@ -131,22 +116,11 @@
         >
             {date}
 
-            {chefJour.toUpperCase()}
-            {agentJour.toUpperCase()}
-            {chefNuit.toUpperCase()}
-            {agentNuit.toUpperCase()}
+            {chefJour.nom}
+            {agentJour.nom}
+            {chefNuit.nom}
+            {agentNuit.nom}
         </NotifBar>
-        <!-- <div class="notification {isFerie ? 'is-success' : 'is-light'}  ">
-
-            {date}
-
-            {chefJour.toUpperCase()}
-            {agentJour.toUpperCase()}
-            {chefNuit.toUpperCase()}
-            {agentNuit.toUpperCase()}
-
-            <button on:click={removeJob(_id)} class="delete" />
-        </div> -->
     {/each}
     <Button
         variant="info"
@@ -154,16 +128,7 @@
         width="fullwidth"
         on:click={() => (addJob = !addJob)}>Ajouter mission</Button
     >
-    {#if !jobs}
-        <!-- <button>Ajouter mission</button> -->
+    {#if !jobs.length}
         Pas encore de mission
     {/if}
 {/if}
-
-<!-- <a class="button" href="jobs/add">Ajouter employé</a> -->
-<style>
-    /* i {
-        font-size: 1.5rem;
-        font-style: normal;
-    } */
-</style>

@@ -88,7 +88,7 @@
             size="medium"
             Type="submit"
             width="is-fullwidth"
-            variant="warning">Enregistrer</Button
+            variant="info mt-4 is-outlined">Enregistrer</Button
         >
         <!--
 
@@ -96,27 +96,82 @@
         -->
     </form>
 {:else}
+    {#if workers.length > 7}
+        <Button
+            variant="info mt-4 is-outlined"
+            size="large"
+            width="is-fullwidth"
+            on:click={() => (addWorker = !addWorker)}>Ajouter employé</Button
+        >
+        <br />
+        <table class="table is-bordered is-striped has-text-centered ">
+            <thead>
+                <tr class="is-uppercase ">
+                    <!-- <th>date</th> -->
+                    <th>nom</th>
+                    <th>prenom</th>
+                    <th>téléphone</th>
+                    <th>email</th>
+                    <th colspan="3">actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#each workers as { nom, prenom, phone, email, _id }, idx}
+                    <tr class="p-0 m-0">
+                        <!-- <td>{date}</td> -->
+                        <td class="is-uppercase">{nom}</td>
+                        <td class="is-capitalized">{prenom}</td>
+                        <td>{email}</td>
+                        <td>{phone}</td>
+                        <td
+                            ><tag
+                                class="button  is-danger is-inverted"
+                                on:click={removeWorker(_id)}
+                                ><i class="fas fa-eraser" /></tag
+                            ></td
+                        >
+                        <td
+                            ><tag
+                                class="button  is-info is-inverted"
+                                on:click={() => alert("detail")}
+                                title="detail"><i class="fas fa-eye" /></tag
+                            ></td
+                        >
+                        <td
+                            ><tag
+                                class="button  is-primary is-inverted"
+                                on:click={() => alert("modifier")}
+                                title="edit"><i class="fas fa-pen" /></tag
+                            ></td
+                        >
+                    </tr>
+                {/each}
+            </tbody>
+        </table>
+    {/if}
+
     <Button
-        variant="success"
+        variant="info mt-4 is-outlined"
         size="large"
         width="is-fullwidth"
         on:click={() => (addWorker = !addWorker)}>Ajouter employé</Button
     >
+
     <br />
-    {#each workers as { nom, prenom, phone, email, _id }, idx}
+
+    <!-- {#each workers as { nom, prenom, phone, email, _id }, idx}
         <NotifBar
             classes="is-{idx % 2 === 0 ? 'primary' : 'info'}"
             on:remove={removeWorker(_id)}
         >
-            <!-- <div class="notification  is-{idx % 2 === 0 ? 'primary' : 'info'}"> -->
+            
             {nom}
             {prenom}
             {phone}
             {email}
-            <!-- <button on:click={removeWorker(_id)} class="delete" />
-        </div> -->
+           
         </NotifBar>
-    {/each}
+    {/each} -->
 
     <!-- <button class="button" on:click={() => (addWorker = !addWorker)}
         >Ajouter employé</button
